@@ -8,8 +8,8 @@ tags_metadata = [
 ]
 
 app = FastAPI(
-    title='Test for Ansra',
-    description='Tracker for Ansra',
+    title='Test for Ansara',
+    description='Tracker for Ansara',
     version='0.0.1',
     openapi_tags=tags_metadata,
 )
