@@ -1,8 +1,8 @@
-"""initial, tasks
+"""init
 
-Revision ID: e44eb2dfbf57
+Revision ID: 51b17bb6196b
 Revises: 
-Create Date: 2024-03-09 20:41:53.151482
+Create Date: 2024-03-09 21:25:01.447651
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e44eb2dfbf57'
+revision = '51b17bb6196b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=256), nullable=False),
     sa.Column('state', sa.String(length=128), nullable=False),
-    sa.Column('created_at', sa.Date(), nullable=True),
+    sa.Column('created_at', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_tasks_id'), 'tasks', ['id'], unique=False)

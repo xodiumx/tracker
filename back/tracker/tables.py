@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Date, Integer, String, Table
+from sqlalchemy import Column, Integer, String, Table
 
 from main.db_connect import metadata
 
@@ -12,7 +12,8 @@ tasks = Table(
     Column('state', String(128), nullable=False, default='running'),
     Column(
         'created_at',
-        Date,
-        default=datetime.now,
+        String,
+        nullable=False,
+        default=str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
     ),
 )
