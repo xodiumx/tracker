@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from .services import TaskService
-from .schemas import GetTaskSchema, CreateTaskSchema
+from .schemas import GetTaskSchema, CreateTaskSchema, UpdateTaskSchema
 
 router = APIRouter(
     prefix='/tasks',
@@ -23,6 +23,19 @@ async def create_task(
         service: TaskService = Depends()) -> CreateTaskSchema:
     """Task creation."""
     return await service.create_task(data=data)
+
+
+@router.patch('/{task_id}')
+async def update_task(
+        task_id: int,
+        data: UpdateTaskSchema,
+        service: TaskService = Depends()) -> str:
+    """Task update"""
+    await service.update_post(
+        task_id=task_id,
+        data=data
+    )
+    return 'Task updated successfully'
 
 
 @router.delete('/{post_id}')

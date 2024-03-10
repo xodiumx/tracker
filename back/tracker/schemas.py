@@ -19,3 +19,7 @@ class GetTaskSchema(BaseTaskSchema):
 
 class CreateTaskSchema(BaseTaskSchema):
     ...
+
+
+class UpdateTaskSchema(BaseTaskSchema):
+    ...
