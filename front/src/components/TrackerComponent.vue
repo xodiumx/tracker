@@ -49,7 +49,6 @@ export default {
         console.log(response.data);
         this.fetchTasks();
         alert('Задача успешно создана.');
-        window.location.reload();
       } catch (error) {
         console.error('Ошибка при отправке запроса', error);
       }
