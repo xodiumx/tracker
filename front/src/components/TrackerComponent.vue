@@ -42,7 +42,7 @@ export default {
   methods: {
     addNewTaskToDB: async function () {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/tasks', {
+        const response = await axios.post('http://localhost:8000/tasks', {
           name: this.taskText,
           time_in_work: 0
         });
@@ -56,7 +56,7 @@ export default {
     },
     fetchTasks: async function () {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/tasks');
+          const response = await axios.get('http://localhost:8000/tasks');
           this.tasks = response.data;
           console.log(this.tasks)
         } catch (error) {

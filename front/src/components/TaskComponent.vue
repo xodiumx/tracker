@@ -82,7 +82,7 @@ export default {
           time_in_work: this.timer,
       };
       try {
-        const response = await axios.patch(`http://127.0.0.1:8000/tasks/${this.taskId}`, data);
+        const response = await axios.patch(`http://localhost:8000/tasks/${this.taskId}`, data);
         console.log(response.data);
         this.fetchTasks();
         alert('Задача успешно обновлена.');
@@ -93,7 +93,7 @@ export default {
     },
     fetchTasks: async function () {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/tasks');
+          const response = await axios.get('http://localhost:8000/tasks');
           this.tasks = response.data;
           console.log(this.tasks)
         } catch (error) {

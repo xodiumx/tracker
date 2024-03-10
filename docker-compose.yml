@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: db
+    build: 
+      dockerfile: ./docker/postgres/Dockerfile
+      context: .
+    volumes:
+      - db_volume:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    ports:
+      - '5432:5432'
+
+  back:
+    container_name: back
+    build: 
+      dockerfile: ./docker/back/Dockerfile
+      context: .
+    image: oxdium/tracker:latest
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - static_volume:/src/static/
+      - media_volume:/src/media/
+    env_file:
+      - ./.env
+    ports:
+      - '8000:8000'
+
+  front:
+    build:
+      dockerfile: ./docker/front/Dockerfile
+      context: .
+    image: oxdium/tracker_front:latest
+    volumes:
+      - ./front/:/src/result_build/
+    depends_on:
+      - db
+    ports:
+      - '8080:80'
+    
+
+  # nginx:
+  #   container_name: nginx
+  #   image: nginx:1.21.3-alpine
+  #   ports:
+  #     - '80:80'
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  #     - ./front/build:/usr/share/nginx/html/
+  #     - static_volume:/var/html/static/
+  #     - media_volume:/var/html/media/
+  #   depends_on:
+  #     - back
+  #     - front
+
+volumes:
+  db_volume:
+  static_volume:
+  media_volume:
+  front:
