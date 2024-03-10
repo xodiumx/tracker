@@ -42,7 +42,7 @@ export default {
   methods: {
     addNewTaskToDB: async function () {
       try {
-        const response = await axios.post('http://localhost:8000/tasks', {
+        const response = await axios.post('http://178.154.207.253:8000/tasks', {
           name: this.taskText,
           time_in_work: 0
         });
@@ -55,8 +55,13 @@ export default {
       }
     },
     fetchTasks: async function () {
+        const config = {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          }
+        };
         try {
-          const response = await axios.get('http://localhost:8000/tasks');
+          const response = await axios.get('http://178.154.207.253:8000/tasks', config);
           this.tasks = response.data;
           console.log(this.tasks)
         } catch (error) {
