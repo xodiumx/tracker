@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 class BaseTaskSchema(BaseModel):
     name: str
+    time_in_work: int
 
     class Config:
         orm_mode = True

@@ -16,4 +16,9 @@ tasks = Table(
         nullable=False,
         default=str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
     ),
+    Column(
+        'time_in_work',
+        Integer,
+        nullable=False,
+    ),
 )
