@@ -1,10 +1,12 @@
 <template>
-  <div class="task">
-    <div class="task-content">
-      <h3>{{ taskText }}</h3>
-    </div>
-    <div class="timer">
-      <p>{{ formattedTime }}</p>
+  <div class="task-container">
+    <div class="task" @click="toggleTimer">
+      <div class="task-content">
+        <h3>{{ taskText }}</h3>
+      </div>
+      <div class="timer">
+        <h4>{{ formattedTime }}</h4>
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +23,7 @@ export default {
     return {
       timer: 0,
       timerInterval: null,
+      isTimerRunning: true,
     };
   },
   mounted() {
@@ -44,7 +47,9 @@ export default {
   methods: {
     startTimer() {
       this.timerInterval = setInterval(() => {
-        this.timer++;
+        if (this.isTimerRunning) {
+          this.timer++;
+        }
       }, 1000);
     },
     stopTimer() {
@@ -52,6 +57,9 @@ export default {
     },
     padZero(value) {
       return value < 10 ? `0${value}` : value;
+    },
+    toggleTimer() {
+      this.isTimerRunning = !this.isTimerRunning;
     },
   },
   beforeDestroy() {
@@ -62,14 +70,23 @@ export default {
 
 
 <style scoped>
+h3 {
+  padding-left: 3rem;
+}
+h4 {
+  color: blue;
+}
+.task-container {
+  margin: 0;
+  padding: 0;
+
+}
 .task {
   display: flex;
   justify-content: space-between;
+  margin-right: 6rem;
 }
 .task-content {
   flex: 1;
-}
-.timer {
-  margin-right: 10%;
 }
 </style>

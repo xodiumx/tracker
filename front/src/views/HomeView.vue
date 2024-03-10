@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <main>
+  <div class="main-block">
     <div class="container">
       <div class="external-block">
           <div class="internal-block">
@@ -10,10 +10,11 @@
           </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <style scoped>
+
 .container {
     display: flex;
     justify-content: center;
@@ -23,13 +24,23 @@
 .external-block {
     padding: 5%;
     margin: 5%;
-    background-color: #0a0000;
     height: 100vh;
     width: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 .internal-block {
-    width: 100vh;
-    height: 90vh;
-    background-color: #d0d0d0;
+    flex-grow: 1;
+    margin: 2%;
+    background-color: #b5b5b5;
+    background-image: linear-gradient(45deg, white, silver);
+    border-radius: 10px;
+}
+.main-block {
+  background: linear-gradient(45deg, gray, black);
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 </style>
