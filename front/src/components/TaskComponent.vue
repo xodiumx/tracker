@@ -1,5 +1,5 @@
 <template>
-  <div class="task-container" @click="addNewTaskToDB">
+  <div class="task-container" @click="UpdateTaskInDB">
     <div class="task" @click="toggleTimer">
       <div class="task-content">
         <h3>{{ taskName }}</h3>
@@ -17,6 +17,10 @@ import axios from 'axios';
 
 export default {
   props: {
+    taskId: {
+      type: Number,
+      required: true,
+    },
     taskName: {
       type: String,
       required: true,
@@ -68,7 +72,7 @@ export default {
     toggleTimer() {
       this.isTimerRunning = !this.isTimerRunning;
     },
-    addNewTaskToDB: async function () {
+    UpdateTaskInDB: async function () {
       if (this.timer < 60) {
         alert('Время работы должно быть не менее 60 секунд.');
         return;
@@ -78,10 +82,10 @@ export default {
           time_in_work: this.timer,
       };
       try {
-        const response = await axios.post('http://127.0.0.1:8000/tasks', data);
+        const response = await axios.patch(`http://127.0.0.1:8000/tasks/${this.taskId}`, data);
         console.log(response.data);
         this.fetchTasks();
-        alert('Задача успешно сохранена.');
+        alert('Задача успешно обновлена.');
         window.location.reload();
       } catch (error) {
         console.error('Ошибка при отправке запроса', error);

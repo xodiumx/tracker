@@ -15,7 +15,10 @@
       </div>
       <div class="tasks-container">
         <div v-for="(task, index) in tasks" :key="index">
-          <TaskComponent :taskName="task.name" :taskTime="task.time_in_work"/>
+          <TaskComponent
+            :taskId="task.id"
+            :taskName="task.name" 
+            :taskTime="task.time_in_work"/>
           <hr>
         </div>
       </div>
@@ -40,7 +43,8 @@ export default {
     addNewTaskToDB: async function () {
       try {
         const response = await axios.post('http://127.0.0.1:8000/tasks', {
-          name: this.taskText
+          name: this.taskText,
+          time_in_work: 0
         });
         console.log(response.data);
         this.fetchTasks();
