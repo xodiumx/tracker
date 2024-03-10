@@ -1,8 +1,8 @@
 <template>
-  <div class="task-container">
+  <div class="task-container" @click="addNewTaskToDB">
     <div class="task" @click="toggleTimer">
       <div class="task-content">
-        <h3>{{ taskText }}</h3>
+        <h3>{{ taskName }}</h3>
       </div>
       <div class="timer">
         <h4>{{ formattedTime }}</h4>
@@ -12,18 +12,25 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
   props: {
-    taskText: {
+    taskName: {
       type: String,
+      required: true,
+    },
+    taskTime: {
+      type: Number,
       required: true,
     },
   },
   data() {
     return {
-      timer: 0,
+      timer: this.taskTime,
       timerInterval: null,
-      isTimerRunning: true,
+      isTimerRunning: false,
     };
   },
   mounted() {
@@ -61,9 +68,34 @@ export default {
     toggleTimer() {
       this.isTimerRunning = !this.isTimerRunning;
     },
-  },
-  beforeDestroy() {
-    this.stopTimer();
+    addNewTaskToDB: async function () {
+      if (this.timer < 60) {
+        alert('Время работы должно быть не менее 60 секунд.');
+        return;
+      }
+      const data = {
+          name: this.taskName,
+          time_in_work: this.timer,
+      };
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/tasks', data);
+        console.log(response.data);
+        this.fetchTasks();
+        alert('Задача успешно сохранена.');
+        window.location.reload();
+      } catch (error) {
+        console.error('Ошибка при отправке запроса', error);
+      }
+    },
+    fetchTasks: async function () {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/tasks');
+          this.tasks = response.data;
+          console.log(this.tasks)
+        } catch (error) {
+          console.error('Ошибка при получении списка задач', error);
+        }
+    },
   },
 };
 </script>

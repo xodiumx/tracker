@@ -2,7 +2,6 @@
     <div class="tracker">
       <div class="input-container">
         <input
-          class="type-1"
           type="text" 
           v-model="taskText" 
           placeholder="Новая задача" 
@@ -10,13 +9,13 @@
         <img 
         class="play-button"
         src="../assets/play-button.svg" 
-        alt="Add Task" 
-        @click="addTask" 
+        alt="Add Task"
+        @click="addNewTaskToDB"
        />
       </div>
       <div class="tasks-container">
         <div v-for="(task, index) in tasks" :key="index">
-          <component :is="task.component" :taskText="task.taskText" />
+          <TaskComponent :taskName="task.name" :taskTime="task.time_in_work"/>
           <hr>
         </div>
       </div>
@@ -24,6 +23,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import TaskComponent from '@/components/TaskComponent.vue';
 
 export default {
@@ -33,15 +33,33 @@ export default {
       taskText: "",
     };
   },
-  methods: {
-    addTask() {
-      this.tasks.push({
-        component: TaskComponent,
-        taskText: this.taskText,
-      });
-      this.taskText = "";
-    },
+  created() {
+    this.fetchTasks();
   },
+  methods: {
+    addNewTaskToDB: async function () {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/tasks', {
+          name: this.taskText
+        });
+        console.log(response.data);
+        this.fetchTasks();
+        alert('Задача успешно создана.');
+        window.location.reload();
+      } catch (error) {
+        console.error('Ошибка при отправке запроса', error);
+      }
+    },
+    fetchTasks: async function () {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/tasks');
+          this.tasks = response.data;
+          console.log(this.tasks)
+        } catch (error) {
+          console.error('Ошибка при получении списка задач', error);
+        }
+    },
+  }
 };
 </script>
 
