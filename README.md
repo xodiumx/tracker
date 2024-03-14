@@ -40,6 +40,7 @@ sudo docker-compose up -d
 ## Доступные эндпоинты
 
 - Главный эндпоинт - `http://localhost:8080/`
+- Swagger docs - `http://localhost:8000/docs`
 
 ## Tracker
 
