@@ -29,6 +29,8 @@
 import axios from 'axios';
 import TaskComponent from '@/components/TaskComponent.vue';
 
+const apiUrl = import.meta.env.VITE_TASKS_API
+
 export default {
   data() {
     return {
@@ -42,7 +44,7 @@ export default {
   methods: {
     addNewTaskToDB: async function () {
       try {
-        const response = await axios.post('http://178.154.207.253:8000/tasks', {
+        const response = await axios.post(apiUrl, {
           name: this.taskText,
           time_in_work: 0
         });
@@ -60,7 +62,7 @@ export default {
           }
         };
         try {
-          const response = await axios.get('http://178.154.207.253:8000/tasks', config);
+          const response = await axios.get(apiUrl, config);
           this.tasks = response.data;
           console.log(this.tasks)
         } catch (error) {
@@ -120,6 +122,6 @@ input:hover {
 }
 
 .tasks-container {
-  overflow: auto; /* Добавлено для прокрутки, если задач становится слишком много */
+  overflow: auto;
 }
 </style>

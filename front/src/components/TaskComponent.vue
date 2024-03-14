@@ -15,6 +15,8 @@
 
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_TASKS_API
+
 export default {
   props: {
     taskId: {
@@ -82,7 +84,7 @@ export default {
           time_in_work: this.timer,
       };
       try {
-        const response = await axios.patch(`http://178.154.207.253:8000/tasks/${this.taskId}`, data);
+        const response = await axios.patch(`${apiUrl}/${this.taskId}`, data);
         console.log(response.data);
         this.fetchTasks();
         alert('Задача успешно обновлена.');
@@ -97,7 +99,7 @@ export default {
           }
         };
         try {
-          const response = await axios.get('http://178.154.207.253:8000/tasks', config);
+          const response = await axios.get(apiUrl, config);
           this.tasks = response.data;
           console.log(this.tasks)
         } catch (error) {
